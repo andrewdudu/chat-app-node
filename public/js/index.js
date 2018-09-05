@@ -31,5 +31,14 @@ jQuery('#message-form').on('submit', function (e) {
     text: jQuery('[name=message]').val()
   }, function () {
 
+  navigator.geolocation.getCurrentPosition(function(position) {
+    locationButton.removeAttr('disabled').text('Send Location');
+    socket.emit('createLocationMessage', {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    })
+  }, function() {
+    locationButton.removeAttr('disabled').text('Send Location');
+    alert('Unable to fetch location');
   })
 })
