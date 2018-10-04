@@ -17,6 +17,16 @@ function scrollToBottom() {
 
 socket.on('connect', function () {
   console.log('New user connected');
+  var deparam = jQuery.deparam(window.location.search);
+
+  socket.emit('join', deparam, function(err) {
+    if (err) {
+      alert(err);
+      window.location.href = '/';
+    } else {
+      console.log('No error');
+    }
+  })
 
   socket.emit('createMessage', {
     from: 'Admin',
