@@ -27,13 +27,6 @@ socket.on('connect', function () {
       console.log('No error');
     }
   })
-
-  socket.emit('createMessage', {
-    from: 'Admin',
-    text: 'New user connected'
-  }, function () {
-
-  })
 })
 
 socket.on('newMessage', function (message) {
@@ -83,6 +76,16 @@ socket.on('newLocation', function (location) {
 
 socket.on('disconnect', function () {
   console.log('Disconnected from server');
+})
+
+socket.on('updateUserList', function (users) {
+  var ol = jQuery('<ol></ol>')
+
+  users.forEach(function(user) {
+    ol.append(jQuery('<li></li>').text(user));
+  })
+
+  jQuery('#users').html(ol);
 })
 
 jQuery('#message-form').on('submit', function (e) {
